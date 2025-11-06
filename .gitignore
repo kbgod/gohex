@@ -1,0 +1,10 @@
+.env
+.env.docker
+.env.dev
+.env.prod
+.idea
+.dblog
+.dbdata
+.dbdata_test
+tests.test
+build_dev
