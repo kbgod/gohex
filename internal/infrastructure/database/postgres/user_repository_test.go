@@ -205,6 +205,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 
 			if tc.expectedErr != nil {
 				assert.Error(t, err)
+
 				if errors.Is(tc.expectedErr, domainErrors.ErrUserNotFound) {
 					assert.ErrorIs(t, err, tc.expectedErr)
 				} else {

@@ -26,16 +26,19 @@ func (e *DomainError) Error() string {
 
 func (e *DomainError) SetCode(code int) *DomainError {
 	e.code = code
+
 	return e
 }
 
 func (e *DomainError) SetArgs(args ...DomainErrorArg) *DomainError {
 	e.args = args
+
 	return e
 }
 
 func (e *DomainError) SetMessage(message string) *DomainError {
 	e.message = message
+
 	return e
 }
 

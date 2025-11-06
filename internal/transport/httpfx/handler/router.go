@@ -12,5 +12,4 @@ func ApplyRoutes(app *fiber.App, userHandler *UserHandler) {
 
 	app.Post("/users", userHandler.Create)
 	app.Get("/users/:id", userHandler.GetByID)
-
 }

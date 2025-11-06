@@ -53,5 +53,4 @@ func (p *Config) PGXDSN() string {
 		p.PoolMaxConnLifetimeJitter,
 		p.AppName,
 	)
-
 }

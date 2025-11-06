@@ -12,10 +12,10 @@ func NewLogger(l *zerolog.Logger) *Logger {
 	}
 }
 
-func (l Logger) Fatalf(format string, v ...interface{}) {
+func (l Logger) Fatalf(format string, v ...any) {
 	l.logger.Fatal().Msgf(format, v...)
 }
 
-func (l Logger) Printf(format string, v ...interface{}) {
+func (l Logger) Printf(format string, v ...any) {
 	l.logger.Info().Msgf(format, v...)
 }

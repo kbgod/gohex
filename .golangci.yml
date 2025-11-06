@@ -1,0 +1,35 @@
+version: "2"
+linters:
+  default: all
+  disable:
+    - wsl
+    - wrapcheck
+    - varnamelen
+    - tagalign
+    - tagliatelle
+    - predeclared
+    - noinlineerr
+    - mnd
+    - ireturn
+    - gosmopolitan
+    - godot
+    - gochecknoinits
+    - gochecknoglobals
+    - exhaustruct
+    - exhaustive
+    - depguard
+    - containedctx
+  settings:
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
+    revive:
+      rules:
+        - name: package-comments
+          disabled: true
+    cyclop:
+      max-complexity: 15
+  exclusions:
+    paths:
+      - ".*_test\\.go$"

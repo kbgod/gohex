@@ -42,6 +42,7 @@ func (t *Transactor) Do(ctx context.Context, txFunc func(context.Context) error)
 	if err != nil {
 		return fmt.Errorf("failed to begin transaction: %w", err)
 	}
+
 	defer func() {
 		_ = tx.Rollback(ctx) // If rollback fails, there's nothing to do, the transaction will expire by itself
 	}()

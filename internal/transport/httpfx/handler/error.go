@@ -24,6 +24,7 @@ func (c *ClientError) Error() string {
 
 type ValidationError struct {
 	ClientError
+
 	Field string `json:"field"`
 }
 
@@ -43,11 +44,8 @@ func newValidationError(field, message string, code ...int) *ValidationError {
 	} else {
 		ve.Code = http.StatusUnprocessableEntity
 	}
-	return ve
-}
 
-func newNoContent(ctx fiber.Ctx) error {
-	return ctx.SendStatus(http.StatusNoContent)
+	return ve
 }
 
 func newBindError(err error) error {
@@ -85,11 +83,13 @@ func newBadRequest(message string, code ...int) *ClientError {
 	} else {
 		ce.Code = http.StatusBadRequest
 	}
+
 	if ce.Code >= 400 && ce.Code < 500 {
 		ce.StatusCode = ce.Code
 	} else {
 		ce.StatusCode = http.StatusBadRequest
 	}
+
 	return ce
 }
 
@@ -100,6 +100,7 @@ func ErrorHandler(ctx fiber.Ctx, err error) error {
 		fiberErr      *fiber.Error
 		domainErr     *domainErrors.DomainError
 	)
+
 	switch {
 	case errors.As(err, &clientErr):
 		return ctx.Status(clientErr.StatusCode).JSON(clientErr)
@@ -112,32 +113,37 @@ func ErrorHandler(ctx fiber.Ctx, err error) error {
 		})
 	case errors.As(err, &domainErr):
 		statusCode := http.StatusBadRequest
+
 		errResponse := &ClientError{
 			Message: domainErr.Message(),
 		}
+
 		if domainErr.Code() == 0 {
 			errResponse.Code = http.StatusBadRequest
 		} else {
 			errResponse.Code = domainErr.Code()
-			if domainErr.Code() >= 400 && domainErr.Code() < 500 {
+			if domainErr.Code() >= http.StatusBadRequest && domainErr.Code() < http.StatusInternalServerError {
 				statusCode = domainErr.Code()
 			}
 		}
+
 		if len(domainErr.Args()) > 0 {
 			errResponse.Data = make(map[string]any, len(domainErr.Args()))
 			for _, arg := range domainErr.Args() {
 				errResponse.Data[arg.Key] = arg.Value
 			}
 		}
+
 		return ctx.Status(statusCode).JSON(errResponse)
 	default:
-		//h.observer.Logger.
+		// h.observer.Logger.
 		//	Error().
 		//	Ctx(ctx.Context()).
 		//	Err(err).
 		//	Msg("unhandled error")
 		// LOGGED BY ROUTER LOGGER
 		ctx.Res().Status(http.StatusInternalServerError)
+
 		return nil
 	}
 }

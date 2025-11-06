@@ -20,14 +20,18 @@ func NewAdapter(maxDuration time.Duration) *Logger {
 func (l *Logger) Query(ctx context.Context, sql string, duration time.Duration, rowsAffected int64, err error) {
 	entry := zerolog.
 		Ctx(ctx)
+
 	var event *zerolog.Event
-	if err != nil {
+
+	switch {
+	case err != nil:
 		event = entry.Error().Err(err)
-	} else if duration > l.maxDuration {
+	case duration > l.maxDuration:
 		event = entry.Warn()
-	} else {
+	default:
 		event = entry.Debug()
 	}
+
 	event = event.Str("sql", sql)
 
 	if rowsAffected > 0 {

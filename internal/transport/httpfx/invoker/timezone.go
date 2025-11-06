@@ -3,8 +3,10 @@ package invoker
 import (
 	"app/config"
 	"app/pkg/tz"
+
+	"github.com/pkg/errors"
 )
 
 func SetupTimezone(cfg *config.Config) error {
-	return tz.Setup(cfg.Time)
+	return errors.Wrap(tz.Setup(cfg.Time), "setup timezone")
 }

@@ -91,7 +91,8 @@ func TestUserHandler_Create(t *testing.T) {
 
 			resp, err := app.Test(req)
 			require.NoError(t, err)
-			defer resp.Body.Close()
+
+			defer func() { _ = resp.Body.Close() }()
 
 			assert.Equal(t, tc.expectedStatus, resp.StatusCode)
 
@@ -176,7 +177,8 @@ func TestUserHandler_GetByID(t *testing.T) {
 
 			resp, err := app.Test(req)
 			require.NoError(t, err)
-			defer resp.Body.Close()
+
+			defer func() { _ = resp.Body.Close() }()
 
 			assert.Equal(t, tc.expectedStatus, resp.StatusCode)
 

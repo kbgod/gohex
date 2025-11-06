@@ -150,9 +150,7 @@ func Test_PgxPool_AtomicityNested(t *testing.T) {
 		require.NoError(t, err)
 		require.True(t, exists)
 
-		err = txManager.Do(ctx, func(ctx context.Context) error {
-			return tr.DropTestTable(ctx)
-		})
+		err = txManager.Do(ctx, tr.DropTestTable)
 		require.NoError(t, err)
 
 		exists, err = tr.CheckTestTable(ctx)

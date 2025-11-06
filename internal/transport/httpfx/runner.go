@@ -15,7 +15,7 @@ import (
 
 func CreateApp(cfg *config.Config) fx.Option {
 	return fx.Options(
-		//fx.NopLogger,
+		// fx.NopLogger,
 		fx.Supply(cfg),
 
 		// Provide infrastructure

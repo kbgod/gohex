@@ -29,7 +29,6 @@ func (r *UserRepository) Create(ctx context.Context, user *entity.User) error {
 		Values(user.ID, user.Username).
 		Suffix("RETURNING created_at").
 		ToSql()
-
 	if err != nil {
 		return fmt.Errorf("make query: %w", err)
 	}
@@ -60,6 +59,7 @@ func (r *UserRepository) GetByID(ctx context.Context, id uuid.UUID) (*entity.Use
 	}
 
 	row := r.dbGetter(ctx).QueryRow(ctx, sql, args...)
+
 	user, err := r.scanUser(row)
 	if err != nil {
 		return nil, fmt.Errorf("execute query: %w", err)
@@ -70,6 +70,7 @@ func (r *UserRepository) GetByID(ctx context.Context, id uuid.UUID) (*entity.Use
 
 func (r *UserRepository) scanUser(row pgx.Row) (*entity.User, error) {
 	user := &entity.User{}
+
 	err := row.Scan(
 		&user.ID,
 		&user.Username,

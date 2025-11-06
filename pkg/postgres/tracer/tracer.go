@@ -40,10 +40,12 @@ func (t *LogTracer) TraceQueryEnd(ctx context.Context, _ *pgx.Conn, data pgx.Tra
 	if !ok {
 		return
 	}
+
 	sql, ok := ctx.Value(tracerSQLQueryContextKey{}).(string)
 	if !ok {
 		return
 	}
+
 	args, ok := ctx.Value(tracerArgsQueryContextKey{}).([]any)
 	if !ok {
 		return
@@ -68,21 +70,26 @@ func (t *LogTracer) cleanQuery(input string) string {
 	return strings.Map(cleaner, input)
 }
 
+//nolint:cyclop
 func (t *LogTracer) inlineQueryWithArgs(sql string, args []any) string {
 	if len(args) == 0 {
 		return sql
 	}
 
 	const nullValue = "null"
+
 	for i, arg := range args {
 		argType := reflect.TypeOf(arg)
 		argVal := reflect.ValueOf(arg)
+
 		var value string
+
 		switch {
 		case argType == nil:
 			value = nullValue
 
-		case argType == reflect.TypeOf(time.Time{}):
+		case argType == reflect.TypeFor[time.Time]():
+			//nolint:forcetypeassert
 			timeArg := arg.(time.Time)
 			value = fmt.Sprintf("'%s'", timeArg.Format("2006-01-02 15:04:05"))
 
@@ -96,6 +103,7 @@ func (t *LogTracer) inlineQueryWithArgs(sql string, args []any) string {
 					value = fmt.Sprintf("'%v'", elemVal.Interface())
 				case reflect.Struct:
 					if elemVal.Type() == reflect.TypeFor[time.Time]() {
+						//nolint:forcetypeassert
 						value = fmt.Sprintf("'%s'", elemVal.Interface().(time.Time).Format("2006-01-02 15:04:05"))
 					} else {
 						value = fmt.Sprintf("'%v'", elemVal.Interface())

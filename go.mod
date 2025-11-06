@@ -1,6 +1,6 @@
 module app
 
-go 1.25.0
+go 1.25.4
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
@@ -13,6 +13,7 @@ require (
 	github.com/jackc/pgx/v5 v5.7.6
 	github.com/joho/godotenv v1.5.1
 	github.com/pashagolub/pgxmock/v4 v4.9.0
+	github.com/pkg/errors v0.9.1
 	github.com/pressly/goose/v3 v3.26.0
 	github.com/rs/zerolog v1.34.0
 	github.com/stretchr/testify v1.11.1

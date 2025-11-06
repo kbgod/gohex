@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"time"
 
 	"app/internal/domain/entity"
@@ -58,7 +59,7 @@ func (h *UserHandler) Create(ctx fiber.Ctx) error {
 		Username: req.Username,
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("create user: %w", err)
 	}
 
 	return ctx.JSON(newUserResponse(user))
@@ -88,7 +89,7 @@ func (h *UserHandler) GetByID(ctx fiber.Ctx) error {
 
 	user, err := h.userService.GetByID(ctx.Context(), req.ID)
 	if err != nil {
-		return err
+		return fmt.Errorf("get user by id: %w", err)
 	}
 
 	return ctx.JSON(newUserResponse(user))

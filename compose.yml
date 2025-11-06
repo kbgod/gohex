@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:17
+    env_file:
+      - .env.docker
+    ports:
+      - '${POSTGRES_EXTERNAL_PORT:-5432}:5432'
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - gohex
+  api:
+    build:
+      context: .
+      dockerfile: ./deploy/api.dockerfile
+    env_file:
+      - .env.docker
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - gohex
+
+volumes:
+  pg-data:
+      driver: local
+
+networks:
+  gohex:
+    name: gohex
+    driver: bridge

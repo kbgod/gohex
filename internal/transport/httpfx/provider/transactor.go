@@ -17,6 +17,7 @@ type TransactorResult struct {
 
 func NewPgxTransactor(pool *pgxpool.Pool) TransactorResult {
 	tx, dbGetter := pgxTransactor.New(pool)
+
 	return TransactorResult{
 		Transactor: tx,
 		DBGetter:   dbGetter,

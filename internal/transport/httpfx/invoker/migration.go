@@ -42,7 +42,7 @@ func RunMigrations(cfg *config.Config, logger *zerolog.Logger) error {
 			return nil
 		}
 
-		return err
+		return fmt.Errorf("up migrations: %w", err)
 	}
 
 	return nil
