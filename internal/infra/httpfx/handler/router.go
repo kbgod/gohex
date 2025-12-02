@@ -7,9 +7,9 @@ import (
 	_ "app/docs"
 )
 
-func ApplyRoutes(app *fiber.App, userHandler *UserHandler) {
+func ApplyRoutes(app *fiber.App, handler *Handler) {
 	app.Get("/docs/*", swagger.HandlerDefault)
 
-	app.Post("/users", userHandler.Create)
-	app.Get("/users/:id", userHandler.GetByID)
+	app.Post("/users", handler.CreateUser)
+	app.Get("/users/:id", handler.GetUserByID)
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"app/config"
-	"app/internal/transport/httpfx"
+	"app/internal/infra/httpfx"
 
 	"go.uber.org/fx"
 )

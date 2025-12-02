@@ -1,15 +1,19 @@
-//go:generate mockgen -source=$GOFILE -destination=../../mocks/$GOFILE -package=mocks
-package service
+package port
 
 import (
 	"context"
 
+	"app/internal/domain/dto"
 	"app/internal/domain/entity"
-	"app/internal/dto"
 	"app/internal/types"
 )
 
 type UserService interface {
 	Create(ctx context.Context, input dto.CreateUser) (*entity.User, error)
+	GetByID(ctx context.Context, id types.ID) (*entity.User, error)
+}
+
+type UserRepository interface {
+	Create(ctx context.Context, user *entity.User) error
 	GetByID(ctx context.Context, id types.ID) (*entity.User, error)
 }

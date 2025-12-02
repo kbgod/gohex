@@ -4,21 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"app/internal/domain/dto"
 	"app/internal/domain/entity"
-	"app/internal/domain/service"
-	"app/internal/dto"
 	"app/internal/types"
 
 	"github.com/gofiber/fiber/v3"
 )
-
-type UserHandler struct {
-	userService service.UserService
-}
-
-func NewUserHandler(userService service.UserService) *UserHandler {
-	return &UserHandler{userService: userService}
-}
 
 type createUserRequest struct {
 	Username string `json:"username"`
@@ -38,24 +29,24 @@ func newUserResponse(user *entity.User) userResponse {
 	}
 }
 
-// Create
+// CreateUser
 //
-//	@Summary		Create a new user
-//	@Description	Create a user with a username
+//	@Summary		CreateUser a new user
+//	@Description	CreateUser a user with a username
 //	@Tags			users
 //	@Accept			json
 //	@Produce		json
-//	@Param			payload	body		createUserRequest	true	"Create user payload"
+//	@Param			payload	body		createUserRequest	true	"CreateUser user payload"
 //	@Success		200		{object}	userResponse
 //	@Failure		400		{object}	map[string]string
 //	@Router			/users [post]
-func (h *UserHandler) Create(ctx fiber.Ctx) error {
+func (h *Handler) CreateUser(ctx fiber.Ctx) error {
 	req := new(createUserRequest)
 	if err := ctx.Bind().JSON(req); err != nil {
 		return newBindError(err)
 	}
 
-	user, err := h.userService.Create(ctx.Context(), dto.CreateUser{
+	user, err := h.app.UserService.Create(ctx.Context(), dto.CreateUser{
 		Username: req.Username,
 	})
 	if err != nil {
@@ -69,7 +60,7 @@ type getUserByIDRequest struct {
 	ID types.ID `uri:"id"`
 }
 
-// GetByID
+// GetUserByID
 //
 //	@Summary		Get a user by ID
 //	@Description	Retrieve a user by its ID.
@@ -81,13 +72,13 @@ type getUserByIDRequest struct {
 //	@Failure		400	{object}	map[string]string
 //	@Failure		404	{object}	map[string]string
 //	@Router			/users/{id} [get]
-func (h *UserHandler) GetByID(ctx fiber.Ctx) error {
+func (h *Handler) GetUserByID(ctx fiber.Ctx) error {
 	req := new(getUserByIDRequest)
 	if err := ctx.Bind().All(req); err != nil {
 		return newBindError(err)
 	}
 
-	user, err := h.userService.GetByID(ctx.Context(), req.ID)
+	user, err := h.app.UserService.GetByID(ctx.Context(), req.ID)
 	if err != nil {
 		return fmt.Errorf("get user by id: %w", err)
 	}

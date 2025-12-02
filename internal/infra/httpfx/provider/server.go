@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"app/config"
-	"app/internal/transport/httpfx/handler"
+	"app/internal/infra/httpfx/handler"
 	"app/pkg/httpserver"
 
 	fiberzerolog "github.com/gofiber/contrib/v3/zerolog"

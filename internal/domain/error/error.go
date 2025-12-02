@@ -16,7 +16,7 @@ type DomainError struct {
 }
 
 func (e *DomainError) Error() string {
-	errorf := "domain error - code: %d; message: %s"
+	errorf := "code: %d; message: %s"
 	if len(e.args) > 0 {
 		return fmt.Sprintf(errorf+"; args: %v", e.code, e.message, e.args)
 	}

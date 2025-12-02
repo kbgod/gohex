@@ -3,12 +3,12 @@ package httpfx
 import (
 	"app/config"
 	"app/internal/application"
-	"app/internal/domain/repository"
-	"app/internal/domain/service"
-	"app/internal/infrastructure/database/postgres"
-	"app/internal/transport/httpfx/handler"
-	"app/internal/transport/httpfx/invoker"
-	"app/internal/transport/httpfx/provider"
+	"app/internal/domain/port"
+	"app/internal/domain/service/user"
+	"app/internal/infra/httpfx/handler"
+	"app/internal/infra/httpfx/invoker"
+	"app/internal/infra/httpfx/provider"
+	"app/internal/infra/repository/postgres"
 
 	"go.uber.org/fx"
 )
@@ -25,13 +25,16 @@ func CreateApp(cfg *config.Config) fx.Option {
 		fx.Provide(provider.NewServer),
 
 		// Provide ports
-		fx.Provide(fx.Annotate(postgres.NewUserRepository, fx.As(new(repository.UserRepository)))),
+		fx.Provide(fx.Annotate(postgres.NewUserRepository, fx.As(new(port.UserRepository)))),
 
 		// Provide services
-		fx.Provide(fx.Annotate(application.NewUserService, fx.As(new(service.UserService)))),
+		fx.Provide(fx.Annotate(user.NewService, fx.As(new(port.UserService)))),
+
+		// Provide application
+		fx.Provide(application.New),
 
 		// Provide http handlers
-		fx.Provide(handler.NewUserHandler),
+		fx.Provide(handler.NewHandler),
 
 		fx.Invoke(invoker.SetupTimezone),
 		fx.Invoke(invoker.RunMigrations),

@@ -13,6 +13,28 @@ This is a Go project template based on the principles of **Clean (Hexagonal) Arc
 
 ---
 
+### Project Structure
+```
+.
+├── cmd
+│   └── api - main application entry point
+│   └── migration - database migration tool
+├── database
+│   └── migrations - database migration files
+└── internal
+    ├── application - business logic composition root
+    ├── domain
+    │   ├── dto - data transfer objects
+    │   ├── entity - business entities
+    │   └── error - domain-specific errors
+    │   └── port - primary and secondary ports
+    │   └── service - service implementations (implementations of primary ports)
+    ├── infra - infrastructure layer (primary & secondary adapters)
+    │   ├── httpfx - HTTP server using Fiber and Uber FX
+    │   ├── repository - repository implementations
+    │   │   └── postgres - PostgreSQL repositories
+```
+
 ## Getting Started
 
 ### 1. Prerequisites

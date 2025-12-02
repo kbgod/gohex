@@ -1,12 +1,12 @@
-package application
+package user
 
 import (
 	"context"
 	"errors"
 	"testing"
 
+	"app/internal/domain/dto"
 	"app/internal/domain/entity"
-	"app/internal/dto"
 	"app/internal/mocks"
 
 	"github.com/google/uuid"
@@ -58,7 +58,7 @@ func TestUserService_Create(t *testing.T) {
 			mockUserRepo := mocks.NewMockUserRepository(ctrl)
 			tc.setupMock(mockUserRepo)
 
-			service := NewUserService(mockUserRepo)
+			service := NewService(mockUserRepo)
 			user, err := service.Create(ctx, inputDTO)
 
 			if tc.expectedErr != nil {
@@ -121,7 +121,7 @@ func TestUserService_GetByID(t *testing.T) {
 			mockUserRepo := mocks.NewMockUserRepository(ctrl)
 			tc.setupMock(mockUserRepo)
 
-			service := NewUserService(mockUserRepo)
+			service := NewService(mockUserRepo)
 			user, err := service.GetByID(ctx, tc.inputID)
 
 			if tc.expectedErr != nil {

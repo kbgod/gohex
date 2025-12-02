@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"app/internal/domain/dto"
 	"app/internal/domain/entity"
-	"app/internal/dto"
 	"app/internal/mocks"
 
 	"github.com/gofiber/fiber/v3"

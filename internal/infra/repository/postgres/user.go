@@ -9,6 +9,7 @@ import (
 	domainErrors "app/internal/domain/error"
 	pgxTransactor "app/pkg/transactor/pgx"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -52,7 +53,7 @@ func (r *UserRepository) GetByID(ctx context.Context, id uuid.UUID) (*entity.Use
 	sql, args, err := psql.
 		Select("id", "username", "created_at").
 		From("users").
-		Where("id", id).
+		Where(sq.Eq{"id": id}).
 		ToSql()
 	if err != nil {
 		return nil, fmt.Errorf("make query: %w", err)
