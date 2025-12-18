@@ -29,9 +29,10 @@ This is a Go project template based on the principles of **Clean (Hexagonal) Arc
     │   └── error - domain-specific errors
     │   └── port - primary and secondary ports
     │   └── service - service implementations (implementations of primary ports)
-    ├── infra - infrastructure layer (primary & secondary adapters)
-    │   ├── httpfx - HTTP server using Fiber and Uber FX
+    ├── infra - infrastructure layer (secondary adapters)
     │   ├── repository - repository implementations
+    ├── presentation - presentation layer (primary adapters)
+    │   ├── httpfx - HTTP server using Fiber and Uber FX
     │   │   └── postgres - PostgreSQL repositories
 ```
 

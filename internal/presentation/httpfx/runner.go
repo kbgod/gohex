@@ -5,10 +5,10 @@ import (
 	"app/internal/application"
 	"app/internal/domain/port"
 	"app/internal/domain/service/user"
-	"app/internal/infra/httpfx/handler"
-	"app/internal/infra/httpfx/invoker"
-	"app/internal/infra/httpfx/provider"
 	"app/internal/infra/repository/postgres"
+	"app/internal/presentation/httpfx/handler"
+	"app/internal/presentation/httpfx/invoker"
+	"app/internal/presentation/httpfx/provider"
 
 	"go.uber.org/fx"
 )
