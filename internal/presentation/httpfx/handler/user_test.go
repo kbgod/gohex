@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"app/internal/core"
 	"app/internal/core/dto"
 	"app/internal/core/entity"
 	"app/internal/mocks"
@@ -79,17 +80,19 @@ func TestUserHandler_Create(t *testing.T) {
 				tc.setupMock(mockUserService)
 			}
 
-			handler := NewUserHandler(mockUserService)
+			app := core.NewApplication(mockUserService)
 
-			app := fiber.New(fiber.Config{
+			handler := NewHandler(app)
+
+			router := fiber.New(fiber.Config{
 				ErrorHandler: ErrorHandler,
 			})
-			app.Post("/users", handler.Create)
+			router.Post("/users", handler.CreateUser)
 
 			req := httptest.NewRequest("POST", "/users", bytes.NewBuffer(tc.body))
 			req.Header.Set("Content-Type", "core/json")
 
-			resp, err := app.Test(req)
+			resp, err := router.Test(req)
 			require.NoError(t, err)
 
 			defer func() { _ = resp.Body.Close() }()
@@ -166,16 +169,18 @@ func TestUserHandler_GetByID(t *testing.T) {
 				tc.setupMock(mockUserService)
 			}
 
-			handler := NewUserHandler(mockUserService)
+			app := core.NewApplication(mockUserService)
 
-			app := fiber.New(fiber.Config{
+			handler := NewHandler(app)
+
+			router := fiber.New(fiber.Config{
 				ErrorHandler: ErrorHandler,
 			})
-			app.Get("/users/:id", handler.GetByID)
+			router.Get("/users/:id", handler.GetUserByID)
 
 			req := httptest.NewRequest("GET", "/users/"+tc.userIDString, nil)
 
-			resp, err := app.Test(req)
+			resp, err := router.Test(req)
 			require.NoError(t, err)
 
 			defer func() { _ = resp.Body.Close() }()

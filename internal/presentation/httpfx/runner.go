@@ -31,7 +31,7 @@ func CreateApp(cfg *config.Config) fx.Option {
 		fx.Provide(fx.Annotate(user.NewService, fx.As(new(port.UserService)))),
 
 		// Provide core
-		fx.Provide(core.New),
+		fx.Provide(core.NewApplication),
 
 		// Provide http handlers
 		fx.Provide(handler.NewHandler),

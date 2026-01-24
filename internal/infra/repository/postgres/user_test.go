@@ -13,6 +13,7 @@ import (
 	"app/pkg/transactor"
 	pgxTransactor "app/pkg/transactor/pgx"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -129,10 +130,10 @@ func TestUserRepository_GetByID(t *testing.T) {
 	genericErr := errors.New("something went wrong")
 	scanErr := fmt.Errorf("scan user:")
 
-	sql, _, err := psql.
+	sql, args, err := psql.
 		Select("id", "username", "created_at").
 		From("users").
-		Where("id", mockID).
+		Where(sq.Eq{"id": mockID}).
 		ToSql()
 	require.NoError(t, err)
 
@@ -150,7 +151,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 				rows := pgxmock.NewRows([]string{"id", "username", "created_at"}).
 					AddRow(mockUser.ID, mockUser.Username, mockUser.CreatedAt)
 				mock.ExpectQuery(regexp.QuoteMeta(sql)).
-					WithArgs(mockID).
+					WithArgs(args...).
 					WillReturnRows(rows)
 			},
 			expectedUser: mockUser,
@@ -161,7 +162,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 			inputID: mockID,
 			setupMock: func(mock pgxmock.PgxPoolIface) {
 				mock.ExpectQuery(regexp.QuoteMeta(sql)).
-					WithArgs(mockID).
+					WithArgs(args...).
 					WillReturnError(pgx.ErrNoRows)
 			},
 			expectedUser: nil,
@@ -173,7 +174,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 			setupMock: func(mock pgxmock.PgxPoolIface) {
 				rows := pgxmock.NewRows([]string{"id"}).AddRow(mockUser.ID)
 				mock.ExpectQuery(regexp.QuoteMeta(sql)).
-					WithArgs(mockID).
+					WithArgs(args...).
 					WillReturnRows(rows)
 			},
 			expectedUser: nil,
@@ -184,7 +185,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 			inputID: mockID,
 			setupMock: func(mock pgxmock.PgxPoolIface) {
 				mock.ExpectQuery(regexp.QuoteMeta(sql)).
-					WithArgs(mockID).
+					WithArgs(args...).
 					WillReturnError(genericErr)
 			},
 			expectedUser: nil,

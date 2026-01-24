@@ -8,7 +8,7 @@ type Application struct {
 	UserService port.UserService
 }
 
-func New(userService port.UserService) *Application {
+func NewApplication(userService port.UserService) *Application {
 	return &Application{
 		UserService: userService,
 	}
