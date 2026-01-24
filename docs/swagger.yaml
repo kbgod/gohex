@@ -22,7 +22,7 @@ paths:
   /users:
     post:
       consumes:
-      - application/json
+      - core/json
       description: Create a user with a username
       parameters:
       - description: Create user payload
@@ -32,7 +32,7 @@ paths:
         schema:
           $ref: '#/definitions/handler.createUserRequest'
       produces:
-      - application/json
+      - core/json
       responses:
         "200":
           description: OK
@@ -50,7 +50,7 @@ paths:
   /users/{id}:
     get:
       consumes:
-      - application/json
+      - core/json
       description: Retrieve a user by its ID.
       parameters:
       - description: User ID
@@ -59,7 +59,7 @@ paths:
         required: true
         type: string
       produces:
-      - application/json
+      - core/json
       responses:
         "200":
           description: OK

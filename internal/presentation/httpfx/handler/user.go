@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"app/internal/domain/dto"
-	"app/internal/domain/entity"
+	"app/internal/core/dto"
+	"app/internal/core/entity"
 	"app/internal/types"
 
 	"github.com/gofiber/fiber/v3"

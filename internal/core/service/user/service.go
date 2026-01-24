@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 
-	"app/internal/domain/dto"
-	"app/internal/domain/entity"
-	"app/internal/domain/port"
+	"app/internal/core/dto"
+	"app/internal/core/entity"
+	"app/internal/core/port"
 	"app/internal/types"
 )
 

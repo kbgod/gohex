@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"app/internal/domain/entity"
-	domainErrors "app/internal/domain/error"
+	"app/internal/core/entity"
+	domainErrors "app/internal/core/error"
 	pgxTransactor "app/pkg/transactor/pgx"
 
 	sq "github.com/Masterminds/squirrel"

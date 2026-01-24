@@ -2,9 +2,9 @@ package httpfx
 
 import (
 	"app/config"
-	"app/internal/application"
-	"app/internal/domain/port"
-	"app/internal/domain/service/user"
+	"app/internal/core"
+	"app/internal/core/port"
+	"app/internal/core/service/user"
 	"app/internal/infra/repository/postgres"
 	"app/internal/presentation/httpfx/handler"
 	"app/internal/presentation/httpfx/invoker"
@@ -30,8 +30,8 @@ func CreateApp(cfg *config.Config) fx.Option {
 		// Provide services
 		fx.Provide(fx.Annotate(user.NewService, fx.As(new(port.UserService)))),
 
-		// Provide application
-		fx.Provide(application.New),
+		// Provide core
+		fx.Provide(core.New),
 
 		// Provide http handlers
 		fx.Provide(handler.NewHandler),

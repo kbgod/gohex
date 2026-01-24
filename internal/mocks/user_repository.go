@@ -10,10 +10,11 @@
 package mocks
 
 import (
-	entity "app/internal/domain/entity"
-	types "app/internal/types"
 	context "context"
 	reflect "reflect"
+
+	"app/internal/core/entity"
+	types "app/internal/types"
 
 	gomock "go.uber.org/mock/gomock"
 )

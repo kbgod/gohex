@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	"app/internal/domain/dto"
-	entity "app/internal/domain/entity"
+	"app/internal/core/dto"
+	"app/internal/core/entity"
 	types "app/internal/types"
 
 	gomock "go.uber.org/mock/gomock"

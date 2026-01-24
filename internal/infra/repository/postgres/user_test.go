@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"app/internal/domain/entity"
-	domainErrors "app/internal/domain/error"
+	"app/internal/core/entity"
+	domainErrors "app/internal/core/error"
 	"app/pkg/transactor"
 	pgxTransactor "app/pkg/transactor/pgx"
 

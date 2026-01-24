@@ -19,10 +19,10 @@ const docTemplate = `{
             "post": {
                 "description": "Create a user with a username",
                 "consumes": [
-                    "application/json"
+                    "core/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "core/json"
                 ],
                 "tags": [
                     "users"
@@ -62,10 +62,10 @@ const docTemplate = `{
             "get": {
                 "description": "Retrieve a user by its ID.",
                 "consumes": [
-                    "application/json"
+                    "core/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "core/json"
                 ],
                 "tags": [
                     "users"

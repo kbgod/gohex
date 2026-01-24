@@ -1,11 +1,11 @@
 package handler
 
-import "app/internal/application"
+import "app/internal/core"
 
 type Handler struct {
-	app *application.Application
+	app *core.Application
 }
 
-func NewHandler(app *application.Application) *Handler {
+func NewHandler(app *core.Application) *Handler {
 	return &Handler{app: app}
 }

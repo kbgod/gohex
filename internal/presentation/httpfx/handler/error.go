@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	domainErrors "app/internal/domain/error"
+	domainErrors "app/internal/core/error"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/schema"

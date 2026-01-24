@@ -5,8 +5,8 @@ import (
 	"errors"
 	"testing"
 
-	"app/internal/domain/dto"
-	"app/internal/domain/entity"
+	"app/internal/core/dto"
+	"app/internal/core/entity"
 	"app/internal/mocks"
 
 	"github.com/google/uuid"

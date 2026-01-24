@@ -1,7 +1,7 @@
-package application
+package core
 
 import (
-	"app/internal/domain/port"
+	"app/internal/core/port"
 )
 
 type Application struct {

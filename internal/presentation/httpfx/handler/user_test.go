@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"app/internal/domain/dto"
-	"app/internal/domain/entity"
+	"app/internal/core/dto"
+	"app/internal/core/entity"
 	"app/internal/mocks"
 
 	"github.com/gofiber/fiber/v3"
@@ -87,7 +87,7 @@ func TestUserHandler_Create(t *testing.T) {
 			app.Post("/users", handler.Create)
 
 			req := httptest.NewRequest("POST", "/users", bytes.NewBuffer(tc.body))
-			req.Header.Set("Content-Type", "application/json")
+			req.Header.Set("Content-Type", "core/json")
 
 			resp, err := app.Test(req)
 			require.NoError(t, err)

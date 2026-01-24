@@ -3,7 +3,7 @@
 CREATE TABLE users (
     id UUID PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 -- +goose StatementEnd
 

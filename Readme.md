@@ -22,8 +22,7 @@ This is a Go project template based on the principles of **Clean (Hexagonal) Arc
 ├── database
 │   └── migrations - database migration files
 └── internal
-    ├── application - business logic composition root
-    ├── domain
+    ├── core - application layer
     │   ├── dto - data transfer objects
     │   ├── entity - business entities
     │   └── error - domain-specific errors
@@ -31,9 +30,12 @@ This is a Go project template based on the principles of **Clean (Hexagonal) Arc
     │   └── service - service implementations (implementations of primary ports)
     ├── infra - infrastructure layer (secondary adapters)
     │   ├── repository - repository implementations
+    │   │   └── postgres - PostgreSQL repositories
     ├── presentation - presentation layer (primary adapters)
     │   ├── httpfx - HTTP server using Fiber and Uber FX
-    │   │   └── postgres - PostgreSQL repositories
+    │   │   └── handler - HTTP handlers
+    │   │   └── invoker - fx invokers
+    │   │   └── provider - fx providers
 ```
 
 ## Getting Started
