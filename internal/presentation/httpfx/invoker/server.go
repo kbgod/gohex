@@ -25,7 +25,7 @@ func StartHTTPServer(
 
 			return nil
 		},
-		OnStop: func(ctx context.Context) error {
+		OnStop: func(context.Context) error {
 			logger.Info().Msg("httpserver.Stop")
 
 			return app.ShutdownWithTimeout(cfg.HTTP.ShutdownTimeout)

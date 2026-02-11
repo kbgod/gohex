@@ -1,8 +1,8 @@
 package handler
 
 import (
+	swagger "github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/swagger/v2"
 
 	_ "app/docs"
 )
