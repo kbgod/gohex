@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"app/internal/core/entity"
-	domainErrors "app/internal/core/error"
+	"app/internal/core/port"
 	"app/pkg/transactor"
 	pgxTransactor "app/pkg/transactor/pgx"
 
@@ -79,7 +79,7 @@ func TestUserRepository_Create(t *testing.T) {
 					WithArgs(mockUser.ID, mockUser.Username).
 					WillReturnError(duplicateKeyErr)
 			},
-			expectedErr: domainErrors.ErrUserAlreadyExists,
+			expectedErr: port.ErrUserAlreadyExists,
 		},
 		{
 			name:      "Generic DB Error",
@@ -166,7 +166,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 					WillReturnError(pgx.ErrNoRows)
 			},
 			expectedUser: nil,
-			expectedErr:  domainErrors.ErrUserNotFound,
+			expectedErr:  port.ErrUserNotFound,
 		},
 		{
 			name:    "Scan Error",
@@ -207,7 +207,7 @@ func TestUserRepository_GetByID(t *testing.T) {
 			if tc.expectedErr != nil {
 				assert.Error(t, err)
 
-				if errors.Is(tc.expectedErr, domainErrors.ErrUserNotFound) {
+				if errors.Is(tc.expectedErr, port.ErrUserNotFound) {
 					assert.ErrorIs(t, err, tc.expectedErr)
 				} else {
 					assert.ErrorContains(t, err, tc.expectedErr.Error())

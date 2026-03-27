@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"app/internal/core/entity"
-	domainErrors "app/internal/core/error"
+	"app/internal/core/port"
 	pgxTransactor "app/pkg/transactor/pgx"
 
 	sq "github.com/Masterminds/squirrel"
@@ -36,10 +36,9 @@ func (r *UserRepository) Create(ctx context.Context, user *entity.User) error {
 
 	err = r.dbGetter(ctx).QueryRow(ctx, sql, args...).Scan(&user.CreatedAt)
 	if err != nil {
-		var pgErr *pgconn.PgError
-		if errors.As(err, &pgErr) {
+		if pgErr, ok := errors.AsType[*pgconn.PgError](err); ok {
 			if pgErr.Code == duplicateKeyErrorCode {
-				return domainErrors.ErrUserAlreadyExists
+				return port.ErrUserAlreadyExists
 			}
 		}
 
@@ -79,7 +78,7 @@ func (r *UserRepository) scanUser(row pgx.Row) (*entity.User, error) {
 	)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, domainErrors.ErrUserNotFound
+			return nil, port.ErrUserNotFound
 		}
 
 		return nil, fmt.Errorf("scan user: %w", err)

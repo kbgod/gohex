@@ -5,7 +5,13 @@ import (
 
 	"app/internal/core/dto"
 	"app/internal/core/entity"
+	domainErrors "app/internal/core/error"
 	"app/internal/types"
+)
+
+var (
+	ErrUserNotFound      = domainErrors.New("user not found")
+	ErrUserAlreadyExists = domainErrors.New("user already exists")
 )
 
 type UserService interface {
