@@ -14,14 +14,14 @@ Guide for implementing features following **Clean (Hexagonal) Architecture** pri
 
 ## Implementation Steps
 
-### 1. Domain Errors (`internal/core/error/<entity>.go`)
+### 1. Domain Errors (`internal/core/port/<entity>.go`)
 
 ```go
-package error
+package user
 
 var (
-    ErrProductNotFound = New("product not found").SetCode(404)
-    ErrProductExists   = New("product already exists").SetCode(409)
+    ErrProductNotFound = New("product not found")
+    ErrProductExists   = New("product already exists")
 )
 ```
 
