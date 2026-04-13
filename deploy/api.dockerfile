@@ -1,5 +1,5 @@
 # Step 1: Modules
-FROM golang:1.25.4-alpine3.22 AS modules
+FROM golang:1.26.1-alpine3.23 AS modules
 COPY go.mod go.sum /modules/
 WORKDIR /modules
 RUN go mod download
@@ -13,7 +13,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -trimpath -ldflags="-s -w" -o svc ./cmd/api/main.go
 
 # Step 3: Final
-FROM alpine:3.22
+FROM alpine:3.23
 
 EXPOSE 8080
 

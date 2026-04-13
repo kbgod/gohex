@@ -41,7 +41,7 @@ This is a Go project template based on the principles of **Clean (Hexagonal) Arc
 ## Getting Started
 
 ### 1. Prerequisites
-* [Go](https://go.dev/) (version 1.25.4 or higher) installed.
+* [Go](https://go.dev/) (version 1.26.1 or higher) installed.
 * A running instance of [PostgreSQL](https://www.postgresql.org/).
 
 ### 2. Configuration
