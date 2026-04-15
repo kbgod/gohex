@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 	recoverMiddleware "github.com/gofiber/fiber/v3/middleware/recover"
 	"github.com/gofiber/fiber/v3/middleware/requestid"
 	"github.com/google/uuid"
@@ -20,6 +21,7 @@ type Config struct {
 	AppName         string        `env:"HTTP_APP_NAME" envDefault:"go-hex"`
 	BodyLimit       int           `env:"HTTP_BODY_LIMIT" envDefault:"10485760"` // 10 MB
 	TrustedProxies  []string      `env:"HTTP_TRUSTED_PROXIES" envSeparator:","`
+	AllowedOrigins  []string      `env:"HTTP_ALLOWED_ORIGINS" envSeparator:","`
 }
 
 func New(cfg Config, errorHandler fiber.ErrorHandler) (*fiber.App, error) {
@@ -46,6 +48,13 @@ func New(cfg Config, errorHandler fiber.ErrorHandler) (*fiber.App, error) {
 			return uuid.Must(uuid.NewV7()).String()
 		},
 	}))
+
+	corsCFG := cors.ConfigDefault
+	if len(cfg.AllowedOrigins) > 0 {
+		corsCFG.AllowOrigins = cfg.AllowedOrigins
+	}
+
+	app.Use(cors.New(corsCFG))
 
 	return app, nil
 }
